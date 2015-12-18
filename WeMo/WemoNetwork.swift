@@ -12,7 +12,7 @@ protocol WemoNetworkDelegate {
 	func wemoNetworkDidFinishScan(network: WemoNetwork)
 }
 
-class WemoNetwork: NSObject, WemoPingDelegate {
+class WemoNetwork: NSObject, WemoNetworkDeviceDelegate {
 	var delegate: WemoNetworkDelegate?
 	
 	private var timer: NSTimer
@@ -71,6 +71,7 @@ class WemoNetwork: NSObject, WemoPingDelegate {
 		}
 	}
 	
+	// MARK: - IP Scanning
 	func scan() {
 		timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "scanNext", userInfo: nil, repeats: true)
 	}
@@ -82,20 +83,24 @@ class WemoNetwork: NSObject, WemoPingDelegate {
 			return
 		}
 		
-		let ping = WemoPing(baseAddress: base, hostAddress: hostIPAddress)
+		let ping = WemoNetworkDevice(baseAddress: base, hostAddress: hostIPAddress)
 		ping.delegate = self
 		ping.start()
 	}
 	
-	// MARK: WemoPingDelegate
-	func wemoPingRequestDidSucceed(request: WemoPing) {
+	// MARK: - WemoNetworkDeviceDelegate
+	func wemoNetworkDeviceLookupDidSucceed(request: WemoNetworkDevice) {
+		if let macAddress = request.macAddress {
+			print("IP: \(request.ipAddress!), MAC: \(macAddress)")
+		}
 		receivedResponse()
 	}
 	
-	func wemoPingRequestDidFail(request: WemoPing) {
+	func wemoNetworkDeviceLookupDidFail(request: WemoNetworkDevice) {
 		receivedResponse()
 	}
 	
+	// MARK - More
 	func receivedResponse() {
 		responseCount++
 		

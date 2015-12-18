@@ -74,7 +74,7 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 	
 	// MARK: - IP Scanning
 	func scan() {
-		timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "scanNext", userInfo: nil, repeats: true)
+		timer = NSTimer.scheduledTimerWithTimeInterval(0.0005, target: self, selector: "scanNext", userInfo: nil, repeats: true)
 	}
 	
 	func scanNext() {

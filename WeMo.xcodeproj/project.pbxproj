@@ -12,6 +12,11 @@
 		035639471C2371B800525300 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 035639451C2371B800525300 /* Main.storyboard */; };
 		035639491C2371B800525300 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 035639481C2371B800525300 /* Assets.xcassets */; };
 		0356394C1C2371B800525300 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0356394A1C2371B800525300 /* LaunchScreen.storyboard */; };
+		035639541C2371CF00525300 /* WemoCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035639531C2371CF00525300 /* WemoCore.swift */; };
+		035639571C2371EF00525300 /* WemoDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035639561C2371EF00525300 /* WemoDevice.swift */; };
+		0370667F1C239BAA004C8D3A /* WemoPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0370667E1C239BAA004C8D3A /* WemoPing.swift */; };
+		037066811C239E20004C8D3A /* WemoNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037066801C239E20004C8D3A /* WemoNetwork.swift */; };
+		037066841C23A112004C8D3A /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 037066831C23A112004C8D3A /* SimplePing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,13 @@
 		035639481C2371B800525300 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0356394B1C2371B800525300 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0356394D1C2371B800525300 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		035639531C2371CF00525300 /* WemoCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WemoCore.swift; sourceTree = "<group>"; };
+		035639561C2371EF00525300 /* WemoDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WemoDevice.swift; sourceTree = "<group>"; };
+		037066741C239B74004C8D3A /* WeMo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeMo-Bridging-Header.h"; sourceTree = "<group>"; };
+		0370667E1C239BAA004C8D3A /* WemoPing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WemoPing.swift; sourceTree = "<group>"; };
+		037066801C239E20004C8D3A /* WemoNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WemoNetwork.swift; sourceTree = "<group>"; };
+		037066821C23A112004C8D3A /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
+		037066831C23A112004C8D3A /* SimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePing.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +68,27 @@
 			children = (
 				035639411C2371B800525300 /* AppDelegate.swift */,
 				035639431C2371B800525300 /* ViewController.swift */,
+				035639551C2371DA00525300 /* WeMo */,
 				035639451C2371B800525300 /* Main.storyboard */,
 				035639481C2371B800525300 /* Assets.xcassets */,
 				0356394A1C2371B800525300 /* LaunchScreen.storyboard */,
 				0356394D1C2371B800525300 /* Info.plist */,
 			);
 			path = WeMo;
+			sourceTree = "<group>";
+		};
+		035639551C2371DA00525300 /* WeMo */ = {
+			isa = PBXGroup;
+			children = (
+				035639531C2371CF00525300 /* WemoCore.swift */,
+				035639561C2371EF00525300 /* WemoDevice.swift */,
+				037066801C239E20004C8D3A /* WemoNetwork.swift */,
+				0370667E1C239BAA004C8D3A /* WemoPing.swift */,
+				037066741C239B74004C8D3A /* WeMo-Bridging-Header.h */,
+				037066821C23A112004C8D3A /* SimplePing.h */,
+				037066831C23A112004C8D3A /* SimplePing.m */,
+			);
+			name = WeMo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +162,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				035639541C2371CF00525300 /* WemoCore.swift in Sources */,
 				035639441C2371B800525300 /* ViewController.swift in Sources */,
+				037066841C23A112004C8D3A /* SimplePing.m in Sources */,
 				035639421C2371B800525300 /* AppDelegate.swift in Sources */,
+				035639571C2371EF00525300 /* WemoDevice.swift in Sources */,
+				037066811C239E20004C8D3A /* WemoNetwork.swift in Sources */,
+				0370667F1C239BAA004C8D3A /* WemoPing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,10 +279,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = WeMo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SachinPatel.WeMo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WeMo/WeMo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -258,10 +293,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = WeMo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SachinPatel.WeMo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WeMo/WeMo-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -284,6 +321,7 @@
 				035639521C2371B800525300 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

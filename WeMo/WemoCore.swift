@@ -8,11 +8,16 @@
 
 import UIKit
 
+protocol WemoCoreDelegate {
+	func wemoCore(core: WemoCore, didDiscoverDevice wemoDevice: WemoDevice)
+	func wemoCoreDidEndDiscovery(core: WemoCore)
+}
+
 class WemoCore: NSObject, WemoScannerDelegate {
 	static let sharedInstance = WemoCore()
-	var devices: [WemoDevice]
 	
-	var reloadDevicesClosure: (([WemoDevice]) -> ())?
+	var delegate: WemoCoreDelegate?
+	var devices: [WemoDevice]
 	
 	override init() {
 		devices = [WemoDevice]()
@@ -25,22 +30,19 @@ class WemoCore: NSObject, WemoScannerDelegate {
 		
 	}
 	
-	func reloadDevices(completion: ([WemoDevice]) -> ()) {
-		reloadDevicesClosure = completion
-		
+	func discoverDevices() {
 		let network = WemoScanner()
 		network.delegate = self
 		network.scan()
 	}
 	
-	// MARK: WemoNetworkDelegate
-	func wemoNetworkDidFindDevices(networkDevices: [WemoScannerRequest]) {
-		devices = networkDevices.map({ (networkDevice) -> WemoDevice in
-			return WemoDevice(networkDevice: networkDevice)
-		})
-		if let completion = reloadDevicesClosure {
-			completion(devices)
-			reloadDevicesClosure = nil
-		}
+	// MARK: WemoScannerDelegate
+	func wemoScannerDidDiscoverDevice(device: WemoDevice) {
+		devices.append(device)
+		delegate?.wemoCore(self, didDiscoverDevice: device)
+	}
+	
+	func wemoScannerFinishedScanning() {
+		
 	}
 }

@@ -1,5 +1,5 @@
 //
-//  WemoNetwork.swift
+//  WemoScanner.swift
 //  WeMo
 //
 //  Created by Sachin on 12/17/15.
@@ -9,13 +9,13 @@
 import UIKit
 
 protocol WemoScannerDelegate {
-	func wemoNetworkDidFindDevices(devices: [WemoScannerRequest])
+	func wemoScannerDidDiscoverDevice(device: WemoDevice)
+	func wemoScannerFinishedScanning()
 }
 
 class WemoScanner: NSObject, WemoScannerRequestDelegate {
 	var delegate: WemoScannerDelegate?
 	
-	private var devices: [WemoScannerRequest]
 	private var timer: NSTimer
 	private var baseIPAddress: String?
 	private var hostIPAddress: Int
@@ -56,9 +56,8 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 	}
 	
 	override init() {
-		devices = [WemoScannerRequest]()
 		timer = NSTimer()
-		hostIPAddress = 0
+		hostIPAddress = 112
 		responseCount = 0
 		
 		super.init()
@@ -92,10 +91,20 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 	
 	// MARK: - WemoScannerRequestDelegate
 	func wemoScannerRequestLookupDidSucceed(request: WemoScannerRequest) {
-		print("IP: \(request.ipAddress!), MAC: \(request.macAddress!)")
-		if devices.indexOf(request) == nil {
-			devices.append(request)
+		// If MAC address matches Belkin pattern, call delegate method
+		let wemoMACPattern = "EC:1A:59:(?:[\\d]|[A-F]){2}:(?:[\\d]|[A-F]){2}:(?:[\\d]|[A-F]){2}"
+		guard let mac = request.macAddress else { return }
+		let regexExpression = try! NSRegularExpression(pattern: wemoMACPattern, options: .CaseInsensitive)
+		let matches = regexExpression.matchesInString(mac, options: [], range: NSMakeRange(0, mac.characters.count))
+		if matches.count > 0 {
+			let device = WemoDevice(request: request)
+			device.updateFriendlyName(completion: { (_) -> () in
+				self.delegate?.wemoScannerDidDiscoverDevice(device)
+			})
 		}
+		
+		print("IP: \(request.ipAddress!), MAC: \(mac)")
+
 		receivedResponse()
 	}
 	
@@ -108,15 +117,7 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 		responseCount++
 		if responseCount > 255 {
 			timer.invalidate()
-			
-			// Finished scan, filter to WeMo devices
-			let wemoMACPattern = "EC:1A:59:(?:[\\d]|[A-F]){2}:(?:[\\d]|[A-F]){2}:(?:[\\d]|[A-F]){2}"
-			delegate?.wemoNetworkDidFindDevices(devices.filter({ (device) -> Bool in
-				guard let mac = device.macAddress else { return false }
-				let regexExpression = try! NSRegularExpression(pattern: wemoMACPattern, options: .CaseInsensitive)
-				let matches = regexExpression.matchesInString(mac, options: [], range: NSMakeRange(0, mac.characters.count))
-				return matches.count > 0
-			}))
+			delegate?.wemoScannerFinishedScanning()
 		}
 	}
 }

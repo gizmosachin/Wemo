@@ -32,7 +32,7 @@ class WemoConduit: NSObject {
 		}
 	}
 	
-	func run(ipAddress: String, type: WemoConduitRequestType) {
+	func run(ipAddress: String, type: WemoConduitRequestType, completion: (NSString?, NSError?) -> ()) {
 		let actionString = actionStringForRequestType(type)
 		
 		// Set up request
@@ -63,12 +63,12 @@ class WemoConduit: NSObject {
 			(let data, let response, let error) in
 			
 			guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
-				print("error")
+				completion(nil, error)
 				return
 			}
 			
 			let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
-			print(dataString)
+			completion(dataString, nil)
 		}
 		
 		task.resume()

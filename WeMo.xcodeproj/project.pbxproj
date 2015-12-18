@@ -18,6 +18,7 @@
 		037066811C239E20004C8D3A /* WemoScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037066801C239E20004C8D3A /* WemoScanner.swift */; };
 		037066841C23A112004C8D3A /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 037066831C23A112004C8D3A /* SimplePing.m */; };
 		037066911C23EE3E004C8D3A /* MacAddressHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 037066901C23EE3E004C8D3A /* MacAddressHelper.m */; };
+		037066931C23F7C3004C8D3A /* WemoConduit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037066921C23F7C3004C8D3A /* WemoConduit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		0370668B1C23ADAF004C8D3A /* route.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = route.h; sourceTree = "<group>"; };
 		0370668F1C23EE3E004C8D3A /* MacAddressHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacAddressHelper.h; sourceTree = "<group>"; };
 		037066901C23EE3E004C8D3A /* MacAddressHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacAddressHelper.m; sourceTree = "<group>"; };
+		037066921C23F7C3004C8D3A /* WemoConduit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WemoConduit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 			children = (
 				035639531C2371CF00525300 /* WemoCore.swift */,
 				035639561C2371EF00525300 /* WemoDevice.swift */,
+				037066921C23F7C3004C8D3A /* WemoConduit.swift */,
 				037066801C239E20004C8D3A /* WemoScanner.swift */,
 				0370667E1C239BAA004C8D3A /* WemoScannerRequest.swift */,
 				0370668C1C23ADB6004C8D3A /* C Code */,
@@ -184,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				035639541C2371CF00525300 /* WemoCore.swift in Sources */,
+				037066931C23F7C3004C8D3A /* WemoConduit.swift in Sources */,
 				035639441C2371B800525300 /* ViewController.swift in Sources */,
 				037066841C23A112004C8D3A /* SimplePing.m in Sources */,
 				035639421C2371B800525300 /* AppDelegate.swift in Sources */,

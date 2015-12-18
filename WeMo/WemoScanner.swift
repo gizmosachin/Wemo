@@ -92,6 +92,7 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 	
 	// MARK: - WemoScannerRequestDelegate
 	func wemoScannerRequestLookupDidSucceed(request: WemoScannerRequest) {
+		print("IP: \(request.ipAddress!), MAC: \(request.macAddress!)")
 		if devices.indexOf(request) == nil {
 			devices.append(request)
 		}

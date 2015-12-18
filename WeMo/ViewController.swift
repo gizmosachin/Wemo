@@ -11,6 +11,15 @@ import UIKit
 class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		print("Searching for devices...")
+		WemoCore.sharedInstance.reloadDevices({
+			devices in
+			for device in devices {
+				device.setState(.Off, completion: nil)
+				print("IP: \(device.ipAddress), MAC: \(device.macAddress)")
+			}
+		})
 	}
 
 	override func didReceiveMemoryWarning() {

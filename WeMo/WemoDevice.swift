@@ -47,8 +47,10 @@ class WemoDevice: NSObject {
 		assert(ipAddress != "")
 	}
 	
-	func setState(state: WemoState, completion: (Bool) -> ()) {
+	func setState(state: WemoState, completion: ((Bool) -> ())?) {
 		assert(ipAddress != "")
 		assert(state != .Unknown, "Can't set state to Unknown.")
+		let type: WemoConduitRequestType = state == .On ? .SetStateOn : .SetStateOff
+		WemoConduit.sharedInstance.run(ipAddress, type: type)
 	}
 }

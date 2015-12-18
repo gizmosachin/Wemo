@@ -15,20 +15,26 @@ enum WemoState {
 }
 
 class WemoDevice: NSObject {
-	var networkDevice: WemoNetworkDevice?
+	var ipAddress: String
+	var macAddress: String
 	var state: WemoState
 	var friendlyName: String?
 	
 	override init() {
+		ipAddress = ""
+		macAddress = ""
 		state = .Unknown
 		
 		super.init()
 		commonInit()
 	}
 	
-	convenience init(networkDevice: WemoNetworkDevice) {
+	convenience init(networkDevice: WemoScannerRequest) {
 		self.init()
-		self.networkDevice = networkDevice
+		if let ip = networkDevice.ipAddress, mac = networkDevice.macAddress {
+			self.ipAddress = ip
+			self.macAddress = mac
+		}
 		commonInit()
 		updateState(completion: nil)
 	}
@@ -38,11 +44,11 @@ class WemoDevice: NSObject {
 	}
 	
 	func updateState(completion completion: ((WemoState) -> ())?) {
-		assert(networkDevice != nil)
+		assert(ipAddress != "")
 	}
 	
 	func setState(state: WemoState, completion: (Bool) -> ()) {
-		assert(networkDevice != nil)
+		assert(ipAddress != "")
 		assert(state != .Unknown, "Can't set state to Unknown.")
 	}
 }

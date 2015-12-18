@@ -1,5 +1,5 @@
 //
-//  WemoNetworkDevice.swift
+//  WemoScannerRequest.swift
 //  WeMo
 //
 //  Created by Sachin on 12/17/15.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol WemoNetworkDeviceDelegate {
-	func wemoNetworkDeviceLookupDidSucceed(request: WemoNetworkDevice)
-	func wemoNetworkDeviceLookupDidFail(request: WemoNetworkDevice)
+protocol WemoScannerRequestDelegate {
+	func wemoScannerRequestLookupDidSucceed(request: WemoScannerRequest)
+	func wemoScannerRequestLookupDidFail(request: WemoScannerRequest)
 }
 
-class WemoNetworkDevice: NSObject, SimplePingDelegate {
-	var delegate: WemoNetworkDeviceDelegate?
+class WemoScannerRequest: NSObject, SimplePingDelegate {
+	var delegate: WemoScannerRequestDelegate?
 	var baseAddress: String?
 	var hostAddress: Int?
 	
@@ -43,7 +43,7 @@ class WemoNetworkDevice: NSObject, SimplePingDelegate {
 	}
 	
 	func timeout() {
-		delegate?.wemoNetworkDeviceLookupDidFail(self)
+		delegate?.wemoScannerRequestLookupDidFail(self)
 	}
 	
 	// MARK: - SimplePing Delegate
@@ -52,12 +52,12 @@ class WemoNetworkDevice: NSObject, SimplePingDelegate {
 	}
 	
 	func simplePing(pinger: SimplePing!, didFailWithError error: NSError!) {
-		delegate?.wemoNetworkDeviceLookupDidFail(self)
+		delegate?.wemoScannerRequestLookupDidFail(self)
 	}
 	
 	func simplePing(pinger: SimplePing!, didFailToSendPacket packet: NSData!, error: NSError!) {
 		// Not connected to network
-		delegate?.wemoNetworkDeviceLookupDidFail(self)
+		delegate?.wemoScannerRequestLookupDidFail(self)
 	}
 	
 	func simplePing(pinger: SimplePing!, didReceivePingResponsePacket packet: NSData!) {
@@ -67,6 +67,6 @@ class WemoNetworkDevice: NSObject, SimplePingDelegate {
 		ipAddress = second.stringByReplacingOccurrencesOfString("..", withString: ".0.")
 		macAddress = MacAddressHelper.macAddressForIPAddress(ipAddress!)
 		
-		delegate?.wemoNetworkDeviceLookupDidSucceed(self)
+		delegate?.wemoScannerRequestLookupDidSucceed(self)
 	}
 }

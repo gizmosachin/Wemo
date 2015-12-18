@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol WemoNetworkDelegate {
-	func wemoNetworkDidFindDevices(devices: [WemoNetworkDevice])
+protocol WemoScannerDelegate {
+	func wemoNetworkDidFindDevices(devices: [WemoScannerRequest])
 }
 
-class WemoNetwork: NSObject, WemoNetworkDeviceDelegate {
-	var delegate: WemoNetworkDelegate?
+class WemoScanner: NSObject, WemoScannerRequestDelegate {
+	var delegate: WemoScannerDelegate?
 	
-	private var devices: [WemoNetworkDevice]
+	private var devices: [WemoScannerRequest]
 	private var timer: NSTimer
 	private var baseIPAddress: String?
 	private var hostIPAddress: Int
@@ -56,7 +56,7 @@ class WemoNetwork: NSObject, WemoNetworkDeviceDelegate {
 	}
 	
 	override init() {
-		devices = [WemoNetworkDevice]()
+		devices = [WemoScannerRequest]()
 		timer = NSTimer()
 		hostIPAddress = 0
 		responseCount = 0
@@ -85,20 +85,20 @@ class WemoNetwork: NSObject, WemoNetworkDeviceDelegate {
 			return
 		}
 		
-		let ping = WemoNetworkDevice(baseAddress: base, hostAddress: hostIPAddress)
+		let ping = WemoScannerRequest(baseAddress: base, hostAddress: hostIPAddress)
 		ping.delegate = self
 		ping.start()
 	}
 	
-	// MARK: - WemoNetworkDeviceDelegate
-	func wemoNetworkDeviceLookupDidSucceed(request: WemoNetworkDevice) {
+	// MARK: - WemoScannerRequestDelegate
+	func wemoScannerRequestLookupDidSucceed(request: WemoScannerRequest) {
 		if devices.indexOf(request) == nil {
 			devices.append(request)
 		}
 		receivedResponse()
 	}
 	
-	func wemoNetworkDeviceLookupDidFail(request: WemoNetworkDevice) {
+	func wemoScannerRequestLookupDidFail(request: WemoScannerRequest) {
 		receivedResponse()
 	}
 	

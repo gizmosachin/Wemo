@@ -8,9 +8,11 @@
 
 import UIKit
 
-class WemoCore: NSObject {
+class WemoCore: NSObject, WemoNetworkDelegate {
 	static let sharedInstance = WemoCore()
 	var devices: [WemoDevice]
+	
+	var reloadDevicesClosure: (([WemoDevice]) -> ())?
 	
 	override init() {
 		devices = [WemoDevice]()
@@ -23,7 +25,22 @@ class WemoCore: NSObject {
 		
 	}
 	
-	func scan(completion: ([WemoDevice]) -> ()) {
+	func reloadDevices(completion: ([WemoDevice]) -> ()) {
+		reloadDevicesClosure = completion
 		
+		let network = WemoNetwork()
+		network.delegate = self
+		network.scan()
+	}
+	
+	// MARK: WemoNetworkDelegate
+	func wemoNetworkDidFindDevices(networkDevices: [WemoNetworkDevice]) {
+		devices = networkDevices.map({ (networkDevice) -> WemoDevice in
+			return WemoDevice(networkDevice: networkDevice)
+		})
+		if let completion = reloadDevicesClosure {
+			completion(devices)
+			reloadDevicesClosure = nil
+		}
 	}
 }

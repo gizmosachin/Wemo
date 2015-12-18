@@ -15,6 +15,7 @@ enum WemoState {
 }
 
 class WemoDevice: NSObject {
+	var networkDevice: WemoNetworkDevice?
 	var state: WemoState
 	var friendlyName: String?
 	
@@ -25,7 +26,23 @@ class WemoDevice: NSObject {
 		commonInit()
 	}
 	
+	convenience init(networkDevice: WemoNetworkDevice) {
+		self.init()
+		self.networkDevice = networkDevice
+		commonInit()
+		updateState(completion: nil)
+	}
+	
 	func commonInit() {
 		
+	}
+	
+	func updateState(completion completion: ((WemoState) -> ())?) {
+		assert(networkDevice != nil)
+	}
+	
+	func setState(state: WemoState, completion: (Bool) -> ()) {
+		assert(networkDevice != nil)
+		assert(state != .Unknown, "Can't set state to Unknown.")
 	}
 }

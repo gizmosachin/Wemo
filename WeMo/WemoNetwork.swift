@@ -9,12 +9,13 @@
 import UIKit
 
 protocol WemoNetworkDelegate {
-	func wemoNetworkDidFinishScan(network: WemoNetwork)
+	func wemoNetworkDidFindDevices(devices: [WemoNetworkDevice])
 }
 
 class WemoNetwork: NSObject, WemoNetworkDeviceDelegate {
 	var delegate: WemoNetworkDelegate?
 	
+	private var devices: [WemoNetworkDevice]
 	private var timer: NSTimer
 	private var baseIPAddress: String?
 	private var hostIPAddress: Int
@@ -55,6 +56,7 @@ class WemoNetwork: NSObject, WemoNetworkDeviceDelegate {
 	}
 	
 	override init() {
+		devices = [WemoNetworkDevice]()
 		timer = NSTimer()
 		hostIPAddress = 0
 		responseCount = 0
@@ -90,8 +92,8 @@ class WemoNetwork: NSObject, WemoNetworkDeviceDelegate {
 	
 	// MARK: - WemoNetworkDeviceDelegate
 	func wemoNetworkDeviceLookupDidSucceed(request: WemoNetworkDevice) {
-		if let macAddress = request.macAddress {
-			print("IP: \(request.ipAddress!), MAC: \(macAddress)")
+		if devices.indexOf(request) == nil {
+			devices.append(request)
 		}
 		receivedResponse()
 	}
@@ -103,11 +105,17 @@ class WemoNetwork: NSObject, WemoNetworkDeviceDelegate {
 	// MARK - More
 	func receivedResponse() {
 		responseCount++
-		
-		// 255 = 3 bits = host portion of IP
 		if responseCount > 255 {
 			timer.invalidate()
-			delegate?.wemoNetworkDidFinishScan(self)
+			
+			// Finished scan, filter to WeMo devices
+			let wemoMACPattern = "EC:1A:59:(?:[\\d]|[A-F]){2}:(?:[\\d]|[A-F]){2}:(?:[\\d]|[A-F]){2}"
+			delegate?.wemoNetworkDidFindDevices(devices.filter({ (device) -> Bool in
+				guard let mac = device.macAddress else { return false }
+				let regexExpression = try! NSRegularExpression(pattern: wemoMACPattern, options: .CaseInsensitive)
+				let matches = regexExpression.matchesInString(mac, options: [], range: NSMakeRange(0, mac.characters.count))
+				return matches.count > 0
+			}))
 		}
 	}
 }

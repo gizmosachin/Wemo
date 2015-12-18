@@ -99,12 +99,12 @@
 			children = (
 				037066801C239E20004C8D3A /* WemoNetwork.swift */,
 				0370667E1C239BAA004C8D3A /* WemoNetworkDevice.swift */,
-				0370668C1C23ADB6004C8D3A /* C Bridged */,
+				0370668C1C23ADB6004C8D3A /* C Code */,
 			);
 			name = Network;
 			sourceTree = "<group>";
 		};
-		0370668C1C23ADB6004C8D3A /* C Bridged */ = {
+		0370668C1C23ADB6004C8D3A /* C Code */ = {
 			isa = PBXGroup;
 			children = (
 				037066741C239B74004C8D3A /* WeMo-Bridging-Header.h */,
@@ -117,7 +117,7 @@
 				037066821C23A112004C8D3A /* SimplePing.h */,
 				037066831C23A112004C8D3A /* SimplePing.m */,
 			);
-			name = "C Bridged";
+			name = "C Code";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

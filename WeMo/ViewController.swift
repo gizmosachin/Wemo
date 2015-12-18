@@ -9,12 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		let network = WemoNetwork()
-		network.scan()
 	}
 
 	override func didReceiveMemoryWarning() {

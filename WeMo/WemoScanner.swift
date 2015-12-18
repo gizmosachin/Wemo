@@ -57,7 +57,7 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 	
 	override init() {
 		timer = NSTimer()
-		hostIPAddress = 112
+		hostIPAddress = 1
 		responseCount = 0
 		
 		super.init()

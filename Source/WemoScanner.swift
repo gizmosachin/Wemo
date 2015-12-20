@@ -23,6 +23,8 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 	private var localIPAddress: String? {
 		var addresses = [String]()
 		
+		// http://stackoverflow.com/questions/25626117/how-to-get-ip-address-in-swift
+		
 		// Get list of all interfaces on the local machine:
 		var ifaddr : UnsafeMutablePointer<ifaddrs> = nil
 		if getifaddrs(&ifaddr) == 0 {
@@ -103,7 +105,8 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 			})
 		}
 		
-		print("IP: \(request.ipAddress!), MAC: \(mac)")
+		// Debugging
+		// print("IP: \(request.ipAddress!), MAC: \(mac)")
 
 		receivedResponse()
 	}

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WemoCoreDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WemoDelegate {
 	var tableView: UITableView
 	var devices: [WemoDevice]
 	
@@ -25,7 +25,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func commonInit() {
-		WemoCore.sharedInstance.delegate = self
+		Wemo.sharedInstance.delegate = self
 		
 		tableView.backgroundColor = UIColor(white: 0.964, alpha: 1.0)
 		tableView.estimatedRowHeight = 55
@@ -42,7 +42,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func reloadDevices() {
-		WemoCore.sharedInstance.discoverDevices()
+		Wemo.sharedInstance.discoverDevices()
 	}
 	
 	override func viewDidLayoutSubviews() {
@@ -50,16 +50,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		tableView.frame = view.frame
 	}
 	
-	// MARK: WemoCoreDelegate
-	func wemoCore(core: WemoCore, didDiscoverDevice wemoDevice: WemoDevice) {
+	// MARK: WemoDelegate
+	func wemo(core: Wemo, didDiscoverDevice wemoDevice: WemoDevice) {
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
 			self.tableView.reloadData()
 		}
 	}
 	
-	func wemoCoreDidEndDiscovery(core: WemoCore) {
-		
-	}
+	func wemoDidEndDiscovery(core: Wemo) {}
 	
 	// MARK: UITableView
 	func numberOfSectionsInTableView(table: UITableView) -> Int {
@@ -67,14 +65,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func tableView(table: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return WemoCore.sharedInstance.devices.count
+		return Wemo.sharedInstance.devices.count
 	}
 	
 	func tableView(table: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		guard let deviceCell = tableView.dequeueReusableCellWithIdentifier("WemoDeviceCell", forIndexPath: indexPath) as? WemoDeviceCell else {
 			return UITableViewCell()
 		}
-		deviceCell.wemoDevice = WemoCore.sharedInstance.devices[indexPath.row]
+		deviceCell.wemoDevice = Wemo.sharedInstance.devices[indexPath.row]
 		return deviceCell
 	}
 	

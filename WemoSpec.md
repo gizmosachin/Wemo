@@ -1,4 +1,4 @@
-# Wemo.sh
+# Wemo
 
 - WeMo accepts `POST` requests
   
@@ -11,7 +11,6 @@
   
 - Headers
   
-  - `Accept: `
   - `Content-type: text/xml; charset="utf-8"`
   - `SOAPACTION: \"urn:Belkin:service:basicevent:1#ACTION`
   
@@ -68,8 +67,6 @@
       </s:Body>
     </s:Envelope>
     ```
-    
-    ​
   
 - URL: 
   

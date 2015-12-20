@@ -1,5 +1,5 @@
 //
-//  WemoCore.swift
+//  Wemo.swift
 //  WeMo
 //
 //  Created by Sachin on 12/17/15.
@@ -8,26 +8,21 @@
 
 import UIKit
 
-protocol WemoCoreDelegate {
-	func wemoCore(core: WemoCore, didDiscoverDevice wemoDevice: WemoDevice)
-	func wemoCoreDidEndDiscovery(core: WemoCore)
+protocol WemoDelegate {
+	func wemo(controller: Wemo, didDiscoverDevice wemoDevice: WemoDevice)
+	func wemoDidEndDiscovery(core: Wemo)
 }
 
-class WemoCore: NSObject, WemoScannerDelegate {
-	static let sharedInstance = WemoCore()
+class Wemo: NSObject, WemoScannerDelegate {
+	static let sharedInstance = Wemo()
 	
-	var delegate: WemoCoreDelegate?
+	var delegate: WemoDelegate?
 	var devices: [WemoDevice]
 	
 	override init() {
 		devices = [WemoDevice]()
 		
 		super.init()
-		commonInit()
-	}
-	
-	func commonInit() {
-		
 	}
 	
 	func discoverDevices() {
@@ -39,10 +34,10 @@ class WemoCore: NSObject, WemoScannerDelegate {
 	// MARK: WemoScannerDelegate
 	func wemoScannerDidDiscoverDevice(device: WemoDevice) {
 		devices.append(device)
-		delegate?.wemoCore(self, didDiscoverDevice: device)
+		delegate?.wemo(self, didDiscoverDevice: device)
 	}
 	
 	func wemoScannerFinishedScanning() {
-		
+		delegate?.wemoDidEndDiscovery(self)
 	}
 }

@@ -26,6 +26,7 @@ class Wemo: NSObject, WemoScannerDelegate {
 	}
 	
 	func discoverDevices() {
+		devices.removeAll()
 		let network = WemoScanner()
 		network.delegate = self
 		network.scan()

@@ -17,9 +17,7 @@ enum WemoConduitRequestType {
 }
 
 class WemoConduit: NSObject {
-	static let sharedInstance = WemoConduit()
-
-	private func actionStringForRequestType(type: WemoConduitRequestType) -> String {
+	private class func actionStringForRequestType(type: WemoConduitRequestType) -> String {
 		switch type {
 		case .GetState:
 			return "GetBinaryState"
@@ -32,7 +30,7 @@ class WemoConduit: NSObject {
 		}
 	}
 	
-	func run(ipAddress: String, type: WemoConduitRequestType, completion: (NSString?, NSError?) -> ()) {
+	class func run(ipAddress: String, type: WemoConduitRequestType, completion: (NSString?, NSError?) -> ()) {
 		let actionString = actionStringForRequestType(type)
 		
 		// Set up request

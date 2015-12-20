@@ -34,8 +34,7 @@ class WemoConduit: NSObject {
 		let actionString = actionStringForRequestType(type)
 		
 		// Set up request
-		let port = "49153"
-		let url = NSURL(string: "http://\(ipAddress):\(port)/upnp/control/basicevent1")!
+		let url = NSURL(string: "http://\(ipAddress)/upnp/control/basicevent1")!
 		let session = NSURLSession.sharedSession()
 		let request = NSMutableURLRequest(URL: url)
 		request.HTTPMethod = "POST"

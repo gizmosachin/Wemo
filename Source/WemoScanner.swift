@@ -86,7 +86,7 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 			return
 		}
 		
-		let ping = WemoScannerRequest(baseAddress: base, hostAddress: hostIPAddress)
+		let ping = WemoScannerRequest(ipAddress: "\(base).\(hostIPAddress)")
 		ping.delegate = self
 		ping.start()
 	}
@@ -100,8 +100,10 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 		let matches = regexExpression.matchesInString(mac, options: [], range: NSMakeRange(0, mac.characters.count))
 		if matches.count > 0 {
 			let device = WemoDevice(request: request)
-			device.updateFriendlyName(completion: { (_) -> () in
-				self.delegate?.wemoScannerDidDiscoverDevice(device)
+			device.determinePort({
+				device.updateFriendlyName(completion: { (_) -> () in
+					self.delegate?.wemoScannerDidDiscoverDevice(device)
+				})
 			})
 		}
 		

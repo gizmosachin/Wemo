@@ -38,6 +38,19 @@ class WemoDevice: NSObject {
 	}
 	
 	// MARK: -
+	func determinePort(completion: (() -> ())?) {
+		let validPorts = [49154, 49152, 49153, 49155]
+		for port in validPorts {
+			WemoConduit.run("\(ipAddress):\(port)", type: .GetFriendlyName, completion: {
+				response, error in
+				if error == nil {
+					self.ipAddress = "\(self.ipAddress):\(port)"
+					completion?()
+				}
+			})
+		}
+	}
+	
 	func updateFriendlyName(completion completion: ((String) -> ())?) {
 		assert(ipAddress != "")
 		WemoConduit.run(ipAddress, type: .GetFriendlyName, completion: {

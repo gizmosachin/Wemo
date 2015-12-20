@@ -15,10 +15,8 @@ protocol WemoScannerRequestDelegate {
 
 class WemoScannerRequest: NSObject, SimplePingDelegate {
 	var delegate: WemoScannerRequestDelegate?
-	var baseAddress: String?
-	var hostAddress: Int?
 	
-	private var ping: SimplePing?
+	private var validationPing: SimplePing?
 	var ipAddress: String?
 	var macAddress: String?
 	
@@ -26,19 +24,16 @@ class WemoScannerRequest: NSObject, SimplePingDelegate {
 		super.init()
 	}
 	
-	convenience init(baseAddress: String, hostAddress: Int) {
+	convenience init(ipAddress: String) {
 		self.init()
-		self.baseAddress = baseAddress
-		self.hostAddress = hostAddress
+		self.ipAddress = ipAddress
 	}
 	
 	func start() {
-		assert(baseAddress != nil, "Base address must be non-nil.")
-		assert(hostAddress != nil, "Host address must be non-nil.")
-		let hostName = "\(baseAddress!).\(hostAddress!)"
-		ping = SimplePing(hostName: hostName)
-		ping?.delegate = self
-		ping?.start()
+		assert(ipAddress != nil, "IP address must be non-nil.")
+		validationPing = SimplePing(hostName: ipAddress)
+		validationPing?.delegate = self
+		validationPing?.start()
 		performSelector("timeout", withObject: nil, afterDelay: 1)
 	}
 	
@@ -48,10 +43,11 @@ class WemoScannerRequest: NSObject, SimplePingDelegate {
 	
 	// MARK: - SimplePing Delegate
 	func simplePing(pinger: SimplePing!, didStartWithAddress address: NSData!) {
-		ping?.sendPingWithData(nil)
+		pinger.sendPingWithData(nil)
 	}
 	
 	func simplePing(pinger: SimplePing!, didFailWithError error: NSError!) {
+		// Validation failed, device with IP doesn't exist
 		delegate?.wemoScannerRequestLookupDidFail(self)
 	}
 	
@@ -61,12 +57,7 @@ class WemoScannerRequest: NSObject, SimplePingDelegate {
 	}
 	
 	func simplePing(pinger: SimplePing!, didReceivePingResponsePacket packet: NSData!) {
-		let originalIP = "\(baseAddress!).\(hostAddress!)"
-		let first = originalIP.stringByReplacingOccurrencesOfString(".0", withString: ".")
-		let second = first.stringByReplacingOccurrencesOfString(".00", withString: ".")
-		ipAddress = second.stringByReplacingOccurrencesOfString("..", withString: ".0.")
 		macAddress = MacAddressHelper.macAddressForIPAddress(ipAddress!)
-		
 		delegate?.wemoScannerRequestLookupDidSucceed(self)
 	}
 }

@@ -11,7 +11,7 @@ import UIKit
 enum WemoConduitRequestType {
 	case GetState
 	case GetSignalStrength
-	case GetFriendlyName
+	case GetName
 	case SetStateOn
 	case SetStateOff
 }
@@ -23,7 +23,7 @@ class WemoConduit: NSObject {
 			return "GetBinaryState"
 		case .GetSignalStrength:
 			return "GetSignalStrength"
-		case .GetFriendlyName:
+		case .GetName:
 			return "GetFriendlyName"
 		case .SetStateOff, .SetStateOn:
 			return "SetBinaryState"

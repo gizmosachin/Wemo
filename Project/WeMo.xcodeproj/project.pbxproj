@@ -14,7 +14,6 @@
 		03918DEF1C26B25A00C1EB05 /* MacAddressHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 03918DE51C26B25A00C1EB05 /* MacAddressHelper.m */; };
 		03918DF01C26B25A00C1EB05 /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 03918DE81C26B25A00C1EB05 /* SimplePing.m */; };
 		03918DF11C26B25A00C1EB05 /* WemoConduit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03918DEA1C26B25A00C1EB05 /* WemoConduit.swift */; };
-		03918DF21C26B25A00C1EB05 /* Wemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03918DEB1C26B25A00C1EB05 /* Wemo.swift */; };
 		03918DF31C26B25A00C1EB05 /* WemoDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03918DEC1C26B25A00C1EB05 /* WemoDevice.swift */; };
 		03918DF41C26B25A00C1EB05 /* WemoScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03918DED1C26B25A00C1EB05 /* WemoScanner.swift */; };
 		03918DF51C26B25A00C1EB05 /* WemoScannerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03918DEE1C26B25A00C1EB05 /* WemoScannerRequest.swift */; };
@@ -36,7 +35,6 @@
 		03918DE71C26B25A00C1EB05 /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
 		03918DE81C26B25A00C1EB05 /* SimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePing.m; sourceTree = "<group>"; };
 		03918DEA1C26B25A00C1EB05 /* WemoConduit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WemoConduit.swift; path = ../../Source/WemoConduit.swift; sourceTree = "<group>"; };
-		03918DEB1C26B25A00C1EB05 /* Wemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Wemo.swift; path = ../../Source/Wemo.swift; sourceTree = "<group>"; };
 		03918DEC1C26B25A00C1EB05 /* WemoDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WemoDevice.swift; path = ../../Source/WemoDevice.swift; sourceTree = "<group>"; };
 		03918DED1C26B25A00C1EB05 /* WemoScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WemoScanner.swift; path = ../../Source/WemoScanner.swift; sourceTree = "<group>"; };
 		03918DEE1C26B25A00C1EB05 /* WemoScannerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WemoScannerRequest.swift; path = ../../Source/WemoScannerRequest.swift; sourceTree = "<group>"; };
@@ -87,11 +85,10 @@
 		035639551C2371DA00525300 /* WemoControl */ = {
 			isa = PBXGroup;
 			children = (
-				03918DEB1C26B25A00C1EB05 /* Wemo.swift */,
-				03918DEA1C26B25A00C1EB05 /* WemoConduit.swift */,
-				03918DEC1C26B25A00C1EB05 /* WemoDevice.swift */,
 				03918DED1C26B25A00C1EB05 /* WemoScanner.swift */,
 				03918DEE1C26B25A00C1EB05 /* WemoScannerRequest.swift */,
+				03918DEC1C26B25A00C1EB05 /* WemoDevice.swift */,
+				03918DEA1C26B25A00C1EB05 /* WemoConduit.swift */,
 				03918DE01C26B25A00C1EB05 /* C Code */,
 			);
 			name = WemoControl;
@@ -183,7 +180,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				03918DF41C26B25A00C1EB05 /* WemoScanner.swift in Sources */,
-				03918DF21C26B25A00C1EB05 /* Wemo.swift in Sources */,
 				03918DEF1C26B25A00C1EB05 /* MacAddressHelper.m in Sources */,
 				031DC3191C2408EC00A990CB /* WemoDeviceCell.swift in Sources */,
 				03918DF31C26B25A00C1EB05 /* WemoDevice.swift in Sources */,

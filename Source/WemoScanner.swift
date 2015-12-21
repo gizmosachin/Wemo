@@ -79,7 +79,7 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 		timer = NSTimer.scheduledTimerWithTimeInterval(0.0005, target: self, selector: "scanNext", userInfo: nil, repeats: true)
 	}
 	
-	func scanNext() {
+	private func scanNext() {
 		hostIPAddress++
 		guard let base = baseIPAddress else {
 			print("Base IP address is nil.")
@@ -92,7 +92,7 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 	}
 	
 	// MARK: - WemoScannerRequestDelegate
-	func wemoScannerRequestLookupDidSucceed(request: WemoScannerRequest) {
+	internal func wemoScannerRequestLookupDidSucceed(request: WemoScannerRequest) {
 		// If MAC address matches Belkin pattern, call delegate method
 		let wemoMACPattern = "EC:1A:59:(?:[\\d]|[A-F]){2}:(?:[\\d]|[A-F]){2}:(?:[\\d]|[A-F]){2}"
 		guard let mac = request.macAddress else { return }
@@ -101,7 +101,7 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 		if matches.count > 0 {
 			let device = WemoDevice(request: request)
 			device.determinePort({
-				device.updateFriendlyName(completion: { (_) -> () in
+				device.updateName(completion: { (_) -> () in
 					self.delegate?.wemoScannerDidDiscoverDevice(device)
 				})
 			})
@@ -113,12 +113,12 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 		receivedResponse()
 	}
 	
-	func wemoScannerRequestLookupDidFail(request: WemoScannerRequest) {
+	internal func wemoScannerRequestLookupDidFail(request: WemoScannerRequest) {
 		receivedResponse()
 	}
 	
 	// MARK - More
-	func receivedResponse() {
+	private func receivedResponse() {
 		responseCount++
 		if responseCount > 255 {
 			timer.invalidate()

@@ -18,7 +18,7 @@ class WemoDevice: NSObject {
 	var ipAddress: String
 	var macAddress: String
 	var state: WemoState
-	var friendlyName: String?
+	var name: String?
 	
 	override init() {
 		ipAddress = ""
@@ -41,7 +41,7 @@ class WemoDevice: NSObject {
 	func determinePort(completion: (() -> ())?) {
 		let validPorts = [49154, 49152, 49153, 49155]
 		for port in validPorts {
-			WemoConduit.run("\(ipAddress):\(port)", type: .GetFriendlyName, completion: {
+			WemoConduit.run("\(ipAddress):\(port)", type: .GetName, completion: {
 				response, error in
 				if error == nil {
 					self.ipAddress = "\(self.ipAddress):\(port)"
@@ -51,16 +51,16 @@ class WemoDevice: NSObject {
 		}
 	}
 	
-	func updateFriendlyName(completion completion: ((String) -> ())?) {
+	func updateName(completion completion: ((String) -> ())?) {
 		assert(ipAddress != "")
-		WemoConduit.run(ipAddress, type: .GetFriendlyName, completion: {
+		WemoConduit.run(ipAddress, type: .GetName, completion: {
 			response, error in
 			if let responseString = response {
 				// Note: this is a terrible, hacky way to parse XML
 				let components = responseString.componentsSeparatedByString("<FriendlyName>")
 				let inner = components[1].componentsSeparatedByString("</FriendlyName>")
 				let name = inner[0].stringByReplacingOccurrencesOfString("&apos;", withString: "'")
-				self.friendlyName = name
+				self.name = name
 				completion?(name)
 			} else {
 				completion?("")
@@ -90,6 +90,7 @@ class WemoDevice: NSObject {
 		let type: WemoConduitRequestType = state == .On ? .SetStateOn : .SetStateOff
 		WemoConduit.run(ipAddress, type: type, completion: {
 			response, error in
+			self.state = state
 			completion?(error == nil)
 		})
 	}

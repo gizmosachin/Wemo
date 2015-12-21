@@ -12,7 +12,7 @@ class WemoDeviceCell: UITableViewCell {
 	var deviceSwitch: UISwitch
 	var wemoDevice: WemoDevice {
 		didSet {
-			self.textLabel?.text = wemoDevice.friendlyName
+			self.textLabel?.text = wemoDevice.name
 			wemoDevice.updateState { (state) -> () in
 				dispatch_async(dispatch_get_main_queue(), { () -> Void in
 					self.deviceSwitch.enabled = state != .Unknown

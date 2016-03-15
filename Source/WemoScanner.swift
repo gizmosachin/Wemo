@@ -79,8 +79,8 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 		timer = NSTimer.scheduledTimerWithTimeInterval(0.0005, target: self, selector: "scanNext", userInfo: nil, repeats: true)
 	}
 	
-	private func scanNext() {
-		hostIPAddress++
+	func scanNext() {
+		hostIPAddress += 1
 		guard let base = baseIPAddress else {
 			print("Base IP address is nil.")
 			return
@@ -119,7 +119,7 @@ class WemoScanner: NSObject, WemoScannerRequestDelegate {
 	
 	// MARK - More
 	private func receivedResponse() {
-		responseCount++
+		responseCount += 1
 		if responseCount > 255 {
 			timer.invalidate()
 			delegate?.wemoScannerFinishedScanning()
